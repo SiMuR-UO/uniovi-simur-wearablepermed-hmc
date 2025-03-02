@@ -2,8 +2,6 @@ import argparse
 import logging
 import sys
 
-from wearablepermed_hmc import __version__
-
 __author__ = "Miguel Angel Salinas Gancedo"
 __copyright__ = "Miguel Angel Salinas Gancedo"
 __license__ = "MIT"
@@ -26,14 +24,13 @@ def parse_args(args):
     """
     parser = argparse.ArgumentParser(description="BIN to CSV Converter")
     parser.add_argument(
-        "--version",
-        action="version",
-        version=f"uniovi-simur-wearablepermed-hmc {__version__}",
-    )
-    parser.add_argument(
+        "-bin",
+        "--bin-file",
         dest="bin_file", 
         help="Bin origin file")
     parser.add_argument(
+        "-csv",
+        "--csv-file",
         dest="csv_file", 
         help="Csv destination file")
     parser.add_argument(
