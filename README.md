@@ -77,6 +77,27 @@
      $ git clone https://github.com/Simur-project/uniovi-simur-wearablepermed-hmc.git
      ```
 
+- **STEP01**: Build and Debug your project
+     ```
+     $ tox list
+     default environments:
+     default   -> Invoke pytest to run automated tests
+
+     additional environments:
+     build     -> Build the package in isolation according to PEP517, see https://github.com/pypa/build
+     clean     -> Remove old distribution files and temporary build artifacts (./build and ./dist)
+     docs      -> Invoke sphinx-build to build the docs
+     doctests  -> Invoke sphinx-build to run doctests
+     linkcheck -> Check for broken links in the documentation
+     publish   -> Publish the package you have been developing to a package index server. By default, it uses testpypi. If you really want to publish your package to be publicly accessible in PyPI, use the `-- --repository pypi` option
+     ```
+
+     ```
+     $ tox -e clean
+     $ tox -e build
+     $ tox -e docs
+     ```
+
 - **STEP02 Build service**
      ```
      $ docker build -t uniovi-simur-wearablepermed-hmc:1.0.0 .
@@ -93,7 +114,7 @@
      $ docker login
      $ docker push ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0
      ```
-     
+
 - **STEP04: Start service**     
      Set your bin files under Linux **/home/miguel/temp/simur** folder and execute Docker service from **Ubuntu** or **Mac**:
 
