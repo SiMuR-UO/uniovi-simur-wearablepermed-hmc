@@ -122,7 +122,7 @@
      $ docker push ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0
      ```
 
-- **STEP04: Start service**     
+- **STEP05: Start service**     
      Set your bin files under Linux **/home/miguel/temp/simur** folder and execute Docker service from **Ubuntu** or **Mac**:
 
      ```
