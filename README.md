@@ -16,7 +16,7 @@
 
 > Uniovi Simur WearablePerMed HMC.
 
-## Scaffold your project from scratch
+## Start scaffold your project from scratch
 
 - **STEP01**: Install PyScaffold and pyscaffoldext-markdown extension
 
