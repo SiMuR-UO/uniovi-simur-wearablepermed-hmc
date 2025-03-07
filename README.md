@@ -73,21 +73,28 @@
      ```
 
 ## Start develop your project
-
      ```
      $ pip install -r requirements.txt
      ```
+## Build service
+```
+$ docker build -t uniovi-simur-wearablepermed-hmc:1.0.0 .
+```
+
 ## Start service
 
 Start service from Docker
 
 ```
-$ docker run --rm uniovi-simur-wearablepermed-hmc:1.0.0 python src/wearablepermed_hmc/converter.py --bin_file ./data/PMP1020_W1_PI.BIN --csv_file ./data/PMP1020_W1_PI.CSV
+$ docker run \
+--rm \
+-v /home/miguel/temp/simur:/app/data \
+uniovi-simur-wearablepermed-hmc:1.0.0 \
+python converter.py --bin-file data/MATA00.BIN --csv-file data/MATA00.xlsx
 ```
 
 <!-- pyscaffold-notes -->
 
 ## Note
-
 This project has been set up using PyScaffold 4.6. For details and usage
 information on PyScaffold see https://pyscaffold.org/.
