@@ -81,6 +81,7 @@
 - **STEP01**: Clone your project
      ```
      $ git clone https://github.com/Simur-project/uniovi-simur-wearablepermed-hmc.git
+     $ cd uniovi-simur-wearablepermed-hmc
      $ python3 -m venv .venv
      $ source .venv/bin/activate
      $ pip install -r requirements
