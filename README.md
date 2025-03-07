@@ -68,11 +68,15 @@
      $ python3 -m venv .venv
      $ source .venv/bin/activate
      $ pip install tox
+     $ pip install pandas
      $ tox list
      ```
 
 ## Start develop your project
 
+     ```
+     $ pip install -r requirements.txt
+     ```
 ## Start service
 
 Start service from Docker

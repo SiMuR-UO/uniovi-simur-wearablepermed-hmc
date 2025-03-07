@@ -2,6 +2,8 @@ import argparse
 import logging
 import sys
 
+from _bin2csv_0616_ import bin2csv
+
 __author__ = "Miguel Angel Salinas Gancedo"
 __copyright__ = "Miguel Angel Salinas Gancedo"
 __license__ = "MIT"
@@ -9,8 +11,7 @@ __license__ = "MIT"
 _logger = logging.getLogger(__name__)
 
 def converter(bin_file, csv_file):
-    print(bin_file)
-    print(csv_file)
+    bin2csv(bin_file, csv_file)
 
 def parse_args(args):
     """Parse command line parameters
@@ -51,7 +52,6 @@ def parse_args(args):
     )
     return parser.parse_args(args)
 
-
 def setup_logging(loglevel):
     """Setup basic logging
 
@@ -62,7 +62,6 @@ def setup_logging(loglevel):
     logging.basicConfig(
         level=loglevel, stream=sys.stdout, format=logformat, datefmt="%Y-%m-%d %H:%M:%S"
     )
-
 
 def main(args):
     """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
@@ -80,7 +79,6 @@ def main(args):
     converter(args.bin_file, args.csv_file)
     _logger.info("Script ends here")
 
-
 def run():
     """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
 
@@ -88,16 +86,5 @@ def run():
     """
     main(sys.argv[1:])
 
-
 if __name__ == "__main__":
-    # ^  This is a guard statement that will prevent the following code from
-    #    being executed in the case someone imports this file instead of
-    #    executing it as a script.
-    #    https://docs.python.org/3/library/__main__.html
-
-    # After installing your project with pip, users can also run your Python
-    # modules as scripts via the ``-m`` flag, as defined in PEP 338::
-    #
-    #     python -m wearablepermed_hmc.skeleton 42
-    #
     run()
