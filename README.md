@@ -81,15 +81,37 @@
 $ docker build -t uniovi-simur-wearablepermed-hmc:1.0.0 .
 ```
 
+## Tag service
+```
+$ docker tag uniovi-simur-wearablepermed-hmc:1.0.0 ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0
+```
+
+## Publish service
+```
+$ docker logout
+$ docker login
+$ docker push ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0
+```
+
 ## Start service
 
-Start service from Docker
+Execute Docker service from Ubuntu or Mac
 
 ```
 $ docker run \
 --rm \
 -v /home/miguel/temp/simur:/app/data \
-uniovi-simur-wearablepermed-hmc:1.0.0 \
+ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
+python converter.py --bin-file data/MATA00.BIN --csv-file data/MATA00.xlsx
+```
+
+Execute Docker service from Windows
+
+```
+$ docker run \
+--rm \
+-v /mnt/c/Temp/simur:/app/data \
+ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
 python converter.py --bin-file data/MATA00.BIN --csv-file data/MATA00.xlsx
 ```
 
