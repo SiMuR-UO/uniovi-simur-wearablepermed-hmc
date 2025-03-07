@@ -70,7 +70,6 @@
      $ pip install pandas
      $ pip install matplotlib
      $ pip install openpyxl
-     $ tox list
      ```
 
      Installation your python pipeline packages in your virtual environment in development mode:
