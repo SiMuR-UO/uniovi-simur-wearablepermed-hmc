@@ -2,7 +2,7 @@ import argparse
 import logging
 import sys
 
-from _bin2csv_0616_ import bin2csv
+from _bin2csv_0616 import bin2csv
 
 __author__ = "Miguel Angel Salinas Gancedo"
 __copyright__ = "Miguel Angel Salinas Gancedo"

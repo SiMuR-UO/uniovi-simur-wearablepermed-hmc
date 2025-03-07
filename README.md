@@ -68,9 +68,16 @@
      $ source .venv/bin/activate
      $ pip install tox
      $ pip install pandas
+     $ pip install matplotlib
+     $ pip install openpyxl
      $ tox list
      ```
 
+     Installation your python pipeline packages in your virtual environment in development mode:
+
+     ```
+     $ pip freeze > requirements.txt
+     ```
 ## Start develop your project
 - **STEP01**: Clone your project
      ```
