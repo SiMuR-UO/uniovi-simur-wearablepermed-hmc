@@ -12,8 +12,8 @@ __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)
 
-_SEGMENT_BODY = 'Thigh'
-_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 13261119
+_DEF_SEGMENT_BODY = 'Thigh'
+_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 13261119
 
 # This function encapsulates the code to perform load and scaling of WPM data Segmentation is not applied in this function.
 #
@@ -47,6 +47,8 @@ def segment(scaled_data, dictionary_timing):
 def plot(segmented_activity_data, file_name):
     plot_segmented_matrix_data(segmented_activity_data, file_name)
 
+    plt.show()
+
 def parse_args(args):
     """Parse command line parameters
 
@@ -61,11 +63,12 @@ def parse_args(args):
     parser.add_argument(
         "-csv-matrix-PMP",
         "--csv-matrix-PMP",
-        dest="csv_matrix_PMP", 
+        dest="csv_matrix_PMP",         
         help="string, path to the '.csv' file containing all data recorded by MATRIX.")
     parser.add_argument(
         "-segment-body",
         "--segment-body",
+        default=_DEF_SEGMENT_BODY,
         dest="segment_body", 
         help="string, body segment where the IMU is placed ('Thigh', 'Wrist', or 'Hip')")
     parser.add_argument(
@@ -76,6 +79,7 @@ def parse_args(args):
     parser.add_argument(
         "-calibrate-with-start-WALKING-USUAL-SPEED",
         "--calibrate-with-start-WALKING-USUAL-SPEED",
+        default=_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED,
         dest="calibrate_with_start_WALKING_USUAL_SPEED", 
         help="int. The sample, visually inspected, that corresponds to the start of the 'WALKING-USUAL SPEED' activity. If not specified, its default value is None")           
     parser.add_argument(
@@ -94,6 +98,7 @@ def parse_args(args):
         action="store_const",
         const=logging.DEBUG,
     )
+
     return parser.parse_args(args)
 
 def setup_logging(loglevel):
@@ -113,24 +118,22 @@ def main(args):
     
     _logger.info("Aggregator starts here")
 
-    _logger.debug("Starting Scale Data...")
+    _logger.debug("Starting Scale Data ...")
     scaled_data, dictionary_timing = scale(
         args.csv_matrix_PMP, 
-        args.segment_body or _SEGMENT_BODY, 
+        args.segment_body, 
         args.activity_PMP, 
-        args.calibrate_with_start_WALKING_USUAL_SPEED or _CALIBRATE_WITH_START_WALKING_USUAL_SPEED)
+        args.calibrate_with_start_WALKING_USUAL_SPEED)
 
-    _logger.debug("Starting Segment Data...")
+    _logger.debug("Starting Segment Data ...")
     segmented_activity_data = segment(
         scaled_data, 
         dictionary_timing)
 
-    #_logger.debug("Ploting Data...")
-    #plot(
-    #    segmented_activity_data, 
-    #    file_name)
-
-    #plt.show()
+    #_logger.debug("Starting Ploting Data ...")
+    plot(
+        segmented_activity_data, 
+        file_name)
 
     _logger.info("Aggregator ends here")
 
