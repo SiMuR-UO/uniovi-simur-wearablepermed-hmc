@@ -10,8 +10,8 @@ __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)
 
-def converter(bin_file, csv_file):
-    bin2csv(bin_file, csv_file)
+def converter(bin_matrix_PMP, csv_matrix_PMP):
+    bin2csv(bin_matrix_PMP, csv_matrix_PMP)
 
 def parse_args(args):
     """Parse command line parameters
@@ -25,15 +25,15 @@ def parse_args(args):
     """
     parser = argparse.ArgumentParser(description="BIN to CSV Converter")
     parser.add_argument(
-        "-bin",
-        "--bin-file",
-        dest="bin_file", 
-        help="Bin origin file")
+        "-bin-matrix-PMP",
+        "--bin-matrix-PMP",
+        dest="bin_matrix_PMP",
+        help="string, path to the '.bin' file containing all data recorded by MATRIX.")
     parser.add_argument(
-        "-csv",
-        "--csv-file",
-        dest="csv_file", 
-        help="Csv destination file")
+        "-csv-matrix-PMP",
+        "--csv-matrix-PMP",
+        dest="csv_matrix_PMP", 
+        help="string, path to the '.csv' file containing all data recorded by MATRIX.")
     parser.add_argument(
         "-v",
         "--verbose",
@@ -75,8 +75,8 @@ def main(args):
     """
     args = parse_args(args)
     setup_logging(args.loglevel)
-    _logger.debug("Starting parsing calculation...")
-    converter(args.bin_file, args.csv_file)
+    _logger.debug("Starting parsing csv PMP Data Matrix ...")
+    converter(args.bin_matrix_PMP, args.csv_matrix_PMP)
     _logger.info("Script ends here")
 
 def run():

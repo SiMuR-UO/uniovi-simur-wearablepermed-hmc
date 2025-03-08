@@ -6,13 +6,16 @@
     "configurations": [        
         {
             "name": "simur_wearablepermed_hmc",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "args": [
               "--very-verbose",
-              "--bin-file", "/home/miguel/git/uniovi/simur/simur_hmc/tests/data_import/MATA00.BIN",
-              "--csv-file", "/home/miguel/temp/simur/MATA00.xlsx"
+              //"--bin-matrix-PMP", "/home/miguel/git/uniovi/simur/simur_hmc/tests/data_import/MATA00.BIN",
+              //"--bin-matrix-PMP", "/Users/miguel/Temp/simur/MATA00.BIN",              
+              //"--csv-matrix-PMP", "/home/miguel/temp/simur/MATA00.csv"
+              "--csv-matrix-PMP", "/Users/miguel/Temp/simur/MATA00.csv",          
+              "--activity-PMP", "/Users/miguel/Temp/simur/PMP1020_RegistroActividades.xlsx", 
             ],
             "console": "integratedTerminal",
             "justMyCode":false
