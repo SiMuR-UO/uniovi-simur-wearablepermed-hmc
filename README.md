@@ -133,7 +133,15 @@
      --rm \
      -v /home/miguel/temp/simur:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python converter.py --bin-file data/MATA00.BIN --csv-file data/MATA00.xlsx
+     python converter.py --bin-matrix-PMP data/MATA00.BIN --csv-matrix-PMP data/MATA00.csv
+     ```
+
+     ```
+     $ docker run \
+     --rm \
+     -v /home/miguel/temp/simur:/app/data \
+     ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
+     python aggregator.py --csv-matrix-PMP data/MATA00.csv --activity-PMP data/MATA00.xlsx
      ```
 
      Set your bin files under Windows **c:\Temp\simur** folder and execute Docker service from **Windows** using WSL2 (Ubunut 22.02): 
@@ -143,7 +151,15 @@
      --rm \
      -v /mnt/c/Temp/simur:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python converter.py --bin-file data/MATA00.BIN --csv-file data/MATA00.xlsx
+     python converter.py --bin-file data/MATA00.BIN --csv-file data/MATA00.csv
+     ```
+
+     ```
+     $ docker run \
+     --rm \
+     -v /mnt/c/Temp/simur:/app/data \
+     ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
+     python aggregator.py --csv-matrix-PMP data/MATA00.csv --activity-PMP data/MATA00.xlsx
      ```
 
 <!-- pyscaffold-notes -->
