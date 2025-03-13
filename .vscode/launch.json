@@ -11,8 +11,8 @@
             "program": "${file}",
             "args": [
               "--very-verbose",
-              "--bin-file", "/home/miguel/git/uniovi/simur/simur_hmc/tests/data_import/MATA00.BIN",
-              "--csv-file", "/home/miguel/temp/simur/MATA00.xlsx"
+              "--bin-file", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_W1_PI.BIN",
+              "--csv-file", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_W1_PI.csv"
             ],
             "console": "integratedTerminal",
             "justMyCode":false
