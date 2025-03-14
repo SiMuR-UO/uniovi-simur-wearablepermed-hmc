@@ -113,10 +113,13 @@ def segment_WPM_activity_data(dictionary_hours_wpm, imu_data):
 
     # Iterate over the activity definitions and segment data
     for activity_name, start_key, end_key, date_key in activities:
-        start_time = datetime.combine(dictionary_hours_wpm[date_key], dictionary_hours_wpm[start_key])
-        end_time = datetime.combine(dictionary_hours_wpm[date_key], dictionary_hours_wpm[end_key])
-        data = segment_data_by_dates(imu_data, start_time, end_time)
-        segmented_data_wpm[activity_name] = data
+        try:
+            start_time = datetime.combine(dictionary_hours_wpm[date_key], dictionary_hours_wpm[start_key])
+            end_time = datetime.combine(dictionary_hours_wpm[date_key], dictionary_hours_wpm[end_key])
+            data = segment_data_by_dates(imu_data, start_time, end_time)
+            segmented_data_wpm[activity_name] = data
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
     return segmented_data_wpm
 
@@ -150,10 +153,9 @@ def plot_segmented_matrix_data(WPM_data, file_name):
         plt.xlabel('Sample [-]')
         plt.ylabel('Accelerometer data [g]')
         plt.grid(True)
-    plt.show()
 
-    if file_name is not None:
-        plt.savefig(file_name + '.jpg', format='jpg')
+        if file_name is not None:
+            plt.savefig(file_name + '_' + activity + '.jpg', format='jpg')
 
 if __name__ == "__main__":
 	print("main empty")

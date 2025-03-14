@@ -11,8 +11,12 @@
             "program": "${file}",
             "args": [
               "--very-verbose",
-              "--bin-file", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_W1_PI.BIN",
-              "--csv-file", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_W1_PI.csv"
+              //"--bin-matrix-PMP", "/home/miguel/git/uniovi/simur/simur_hmc/tests/data_import/MATA00.BIN",
+              //"--csv-matrix-PMP", "/home/miguel/temp/simur/MATA00.csv"
+              //"--bin-matrix-PMP", "/Users/miguel/Temp/simur/MATA00.BIN",
+              "--csv-matrix-PMP", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_W1_PI.csv",
+              "--activity-PMP", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_RegistroActividades.xlsx",
+              "--file-name", "PMP-1020"
             ],
             "console": "integratedTerminal",
             "justMyCode":false

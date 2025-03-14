@@ -2,13 +2,18 @@ import argparse
 import logging
 import sys
 
-from _WPM_file_management import load_scale_WPM_data, plot_segmented_matrix_data, plot_segmented_matrix_data
+from _WPM_file_management import load_scale_WPM_data
+from _WPM_segmentation import segment_WPM_activity_data, plot_segmented_matrix_data
+
 
 __author__ = "Miguel Angel Salinas Gancedo"
 __copyright__ = "Miguel Angel Salinas Gancedo"
 __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)
+
+_DEF_SEGMENT_BODY = 'Thigh'
+_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 13261119
 
 # This function encapsulates the code to perform load and scaling of WPM data Segmentation is not applied in this function.
 #
@@ -20,8 +25,8 @@ _logger = logging.getLogger(__name__)
 #
 # - Return Value:
 # Returns WPM data properly scaled and the corresponding dictionary timing from the Excel file.
-def scale(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALKING_USUAL_SPEED):
-    scaled_data, dictionary_timing = load_scale_WPM_data(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALKING_USUAL_SPEED=None)
+def scale(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED):
+    scaled_data, dictionary_timing = load_scale_WPM_data(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED)
 
     return scaled_data, dictionary_timing
 
@@ -34,13 +39,13 @@ def scale(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALK
 # Returns:
 # dict: A dictionary containing segmented data for each activity.
 def segment(scaled_data, dictionary_timing):
-    segmented_activity_data = plot_segmented_matrix_data(scaled_data, dictionary_timing)
+    segmented_activity_data = segment_WPM_activity_data(scaled_data, dictionary_timing)
 
     return segmented_activity_data
 
 # Plot activity-by-activity segmented data from MATRIX.
-def plot(dictionary_timing, file_name):
-    segment_WPM_activity_data(dictionary_timing, file_name)
+def plot(segmented_activity_data, file_name):
+    plot_segmented_matrix_data(segmented_activity_data, file_name)
 
 def parse_args(args):
     """Parse command line parameters
@@ -54,30 +59,32 @@ def parse_args(args):
     """
     parser = argparse.ArgumentParser(description="BIN to CSV Converter")
     parser.add_argument(
-        "-csv-file-PMP",
-        "--csv-file-PMP",
-        dest="csv_file_PMP", 
+        "-csv-matrix-PMP",
+        "--csv-matrix-PMP",
+        dest="csv_matrix_PMP",         
         help="string, path to the '.csv' file containing all data recorded by MATRIX.")
     parser.add_argument(
         "-segment-body",
         "--segment-body",
+        default=_DEF_SEGMENT_BODY,
         dest="segment_body", 
         help="string, body segment where the IMU is placed ('Thigh', 'Wrist', or 'Hip')")
     parser.add_argument(
-        "-segment-body",
-        "--segment-body",
-        dest="segment_body", 
-        help="string, body segment where the IMU is placed ('Thigh', 'Wrist', or 'Hip')")
-    parser.add_argument(
-        "-excel-file-path",
-        "--excel-file-path",
-        dest="excel_file_path", 
+        "-activity-PMP",
+        "--activity-PMP",
+        dest="activity_PMP", 
         help="string, path to the corresponding Activity Log of the PMP dataset")                
     parser.add_argument(
         "-calibrate-with-start-WALKING-USUAL-SPEED",
         "--calibrate-with-start-WALKING-USUAL-SPEED",
+        default=_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED,
         dest="calibrate_with_start_WALKING_USUAL_SPEED", 
         help="int. The sample, visually inspected, that corresponds to the start of the 'WALKING-USUAL SPEED' activity. If not specified, its default value is None")           
+    parser.add_argument(
+        "-file-name",
+        "--file-name",
+        dest="file_name", 
+        help="identification PMP file name")  
     parser.add_argument(
         "-v",
         "--verbose",
@@ -94,6 +101,7 @@ def parse_args(args):
         action="store_const",
         const=logging.DEBUG,
     )
+
     return parser.parse_args(args)
 
 def setup_logging(loglevel):
@@ -108,38 +116,31 @@ def setup_logging(loglevel):
     )
 
 def main(args):
-    """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
-
-    Instead of returning the value from :func:`fib`, it prints the result to the
-    ``stdout`` in a nicely formatted message.
-
-    Args:
-      args (List[str]): command line parameters as list of strings
-          (for example  ``["--verbose", "42"]``).
-    """
     args = parse_args(args)
     setup_logging(args.loglevel)
     
-    _logger.info("Script starts here")
+    _logger.info("Aggregator starts here")
 
-    _logger.debug("Starting Scale Data...")
-    scaled_data, dictionary_timing = scale(args.csv_file_PMP, args.segment_body, args.excel_file_path, args.calibrate_with_start_WALKING_USUAL_SPEED)
+    _logger.debug("Starting Scale Data ...")
+    scaled_data, dictionary_timing = scale(
+        args.csv_matrix_PMP, 
+        args.segment_body, 
+        args.activity_PMP, 
+        args.calibrate_with_start_WALKING_USUAL_SPEED)
 
-    _logger.debug("Starting Segment Data...")
-    segmented_activity_data = segmented_activity_data = segment(scaled_data, dictionary_timing)
+    _logger.debug("Starting Segment Data ...")
+    segmented_activity_data = segment(
+        dictionary_timing,
+        scaled_data)
 
-    _logger.debug("Ploting Data...")
-    plot(segmented_activity_data, file_name)
+    #_logger.debug("Starting Ploting Data ...")
+    plot(
+        segmented_activity_data, 
+        args.file_name)
 
-    #plt.show()
-
-    _logger.info("Script ends here")
+    _logger.info("Aggregator ends here")
 
 def run():
-    """Calls :func:`main` passing the CLI arguments extracted from :obj:`sys.argv`
-
-    This function can be used as entry point to create console scripts with setuptools.
-    """
     main(sys.argv[1:])
 
 if __name__ == "__main__":

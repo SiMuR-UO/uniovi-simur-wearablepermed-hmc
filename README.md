@@ -129,7 +129,7 @@
      $ docker run \
      --rm \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
-     uniovi-simur-wearablepermed-hmc:1.0.0 \
+     ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
      python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN --csv-matrix-PMP data/PMP1020_W1_PI.csv
      ```
 
@@ -138,20 +138,20 @@
      ```
      $ docker run \
      --rm \
-     -v /mnt/c/Temp/simur:/app/data \
+     -v /mnt/c/Temp/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
      python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN --csv-matrix-PMP data/PMP1020_W1_PI.csv
      ```
 
-- **STEP06: Start aggrgator service**     
+- **STEP06: Start aggregator service**     
      Set your bin files under Linux **/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data** folder and execute Docker service from **Ubuntu** or **Mac**:
 
      ```
      $ docker run \
      --rm \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
-     uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python converter.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --bin-matrix-PMP data/PMP1020_W1_PI.csv
+     ofertoio/uniovi-simur-wearablepermed-hmc:1.1.0 \
+     python aggregator.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx --file-name PMP-1020
      ```
 
      Set your bin files under Windows **c:\Temp\simur** folder and execute Docker service from **Windows** using WSL2 (Ubunut 22.02): 
@@ -159,9 +159,9 @@
      ```
      $ docker run \
      --rm \
-     -v /mnt/c/Temp/simur:/app/data \
+     -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python converter.py --bin-matrix-PMP data/MATA00.BIN --bin-matrix-PMP data/MATA00.csv
+     python aggregator.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx
      ```
 
 <!-- pyscaffold-notes -->
