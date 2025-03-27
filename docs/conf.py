@@ -117,7 +117,7 @@ copyright = "2025, Miguel Angel Salinas Gancedo"
 # If you don’t need the separation provided between version and release,
 # just set them both to the same value.
 try:
-    from wearablepermed_hmc import __version__ as version
+    from wearablepermed_hmc.data_import import __version__ as version
 except ImportError:
     version = ""
 

@@ -153,6 +153,8 @@ def extract_WPM_info_from_excel(file_path):
         ("D91", "INCREMENTAL CICLOERGOMETRO - Hora de inicio CALENTAMIENTO"),
         ("D92", "INCREMENTAL CICLOERGOMETRO - Hora de inicio INCREMENTAL"),
         ("D93", "INCREMENTAL CICLOERGOMETRO - Hora de fin"),
+        ("D104", "ACTIVIDAD NO ESTRUCTURADA - Hora de inicio"),
+        ("D115", "ACTIVIDAD NO ESTRUCTURADA - Hora de fin"),
         ("E112", "Fecha día 7"),
         ("D144", "YOGA - Hora de inicio"),
         ("D145", "YOGA - Hora de fin"),
@@ -247,11 +249,11 @@ def load_WPM_data(csv_file, segment):
     Returns:
         np.array: Processed IMU data for the specified body segment.
     """
-    if segment == "Wrist":
+    if segment == "M":
         return load_MATRIX_data_by_index(csv_file, np.array([-1, 3, -2]))
-    elif segment == "Thigh":
+    elif segment == "PI":
         return load_MATRIX_data_by_index(csv_file, np.array([3, -1, 2]))
-    elif segment == "Hip":
+    elif segment == "C":
         return load_MATRIX_data_by_index(csv_file, np.array([-1, -3, -2]))
 
 def calculate_accelerometer_drift(WPM_data, excel_file_path, body_segment, walk_usual_speed_start_sample=None):
@@ -277,17 +279,17 @@ def calculate_accelerometer_drift(WPM_data, excel_file_path, body_segment, walk_
     imu_power_off_date_cell = "E112"  # Cell with the MATRIX power-off date
 
     # IMU placed on the thigh
-    if body_segment == "Thigh":
+    if body_segment == "PI":
         imu_power_on_time_cell = "E37"  # Cell with the MATRIX power-on time
         imu_power_off_time_cell = "E273"  # Cell with the MATRIX power-off time
 
     # IMU placed on the hip
-    elif body_segment == "Hip":
+    elif body_segment == "C":
         imu_power_on_time_cell = "E38"
         imu_power_off_time_cell = "E274"
 
     # IMU placed on the wrist
-    elif body_segment == "Wrist":
+    elif body_segment == "M":
         imu_power_on_time_cell = "E39"
         imu_power_off_time_cell = "E275"
 
