@@ -6,17 +6,15 @@
     "configurations": [        
         {
             "name": "simur_wearablepermed_hmc",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "args": [
-              "--very-verbose",
-              //"--bin-matrix-PMP", "/home/miguel/git/uniovi/simur/simur_hmc/tests/data_import/MATA00.BIN",
-              //"--csv-matrix-PMP", "/home/miguel/temp/simur/MATA00.csv"
-              //"--bin-matrix-PMP", "/Users/miguel/Temp/simur/MATA00.BIN",
-              "--csv-matrix-PMP", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_W1_PI.csv",
-              "--activity-PMP", "/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data/PMP1020_RegistroActividades.xlsx",
-              "--file-name", "PMP-1020"
+            //   "--very-verbose",
+            //   "--bin-matrix-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_W1_PI.BIN",
+              "--csv-matrix-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_W1_PI.csv",
+              "--activity-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_RegistroActividades.xlsx",
+              "--export-folder-name", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_export\\data_tot.npz"
             ],
             "console": "integratedTerminal",
             "justMyCode":false
