@@ -12,9 +12,6 @@ __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)
 
-def converter(bin_matrix_PMP, csv_matrix_PMP):
-    bin2csv(bin_matrix_PMP, csv_matrix_PMP)
-
 def parse_args(args):
     """Parse command line parameters
 
@@ -30,7 +27,7 @@ def parse_args(args):
         "-bin-matrix-PMP",
         "--bin-matrix-PMP",
         dest="bin_matrix_PMP",
-        help="string, path to the '.bin' file containing all data recorded by MATRIX.")
+        help="path to the '.bin' file containing all data recorded by MATRIX.")
     parser.add_argument(
         "-v",
         "--verbose",
@@ -64,7 +61,11 @@ def create_file_name_csv(csv_matrix_PMP):
     path_name = Path(csv_matrix_PMP)
     folder_name = os.path.dirname(csv_matrix_PMP)
     file_name = path_name.stem
+    
     return os.path.join(folder_name, file_name + '.csv')
+
+def converter(bin_matrix_PMP, csv_matrix_PMP):
+    bin2csv(bin_matrix_PMP, csv_matrix_PMP)
 
 def main(args):
     """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion
@@ -78,7 +79,8 @@ def main(args):
     """
     args = parse_args(args)
     setup_logging(args.loglevel)
-    _logger.debug("Starting parsing csv PMP Data Matrix ...")
+
+    _logger.debug("Starting converter ...")
     file_name_csv = create_file_name_csv(args.bin_matrix_PMP)
     _logger.debug("The file name is " + file_name_csv)
     converter(args.bin_matrix_PMP, file_name_csv)
