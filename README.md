@@ -12,7 +12,7 @@
 
 [![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
 
-# uniovi-simur-wearablepermed-hmc
+# Description
 
 > Uniovi Simur WearablePerMed HMC.
 
