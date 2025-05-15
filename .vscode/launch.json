@@ -6,7 +6,7 @@
     "configurations": [        
         {
             "name": "simur_wearablepermed_hmc",
-            "type": "debugpy",
+            "type": "python",
             "request": "launch",
             "program": "${file}",
             "args": [
@@ -14,7 +14,8 @@
             //   "--bin-matrix-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_W1_PI.BIN",
               "--csv-matrix-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_W1_PI.csv",
               "--activity-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_RegistroActividades.xlsx",
-              "--export-folder-name", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_export\\data_tot.npz"
+              "--export-folder-name", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_export\\data_tot.npz",
+              "--make-feature-extractions"
             ],
             "console": "integratedTerminal",
             "justMyCode":false
