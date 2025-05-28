@@ -359,7 +359,6 @@ def extract_features(data):
 
     return X_train
 
-
 def export_data(concatenated_data, all_labels, export_folder_name):
     np.savez(export_folder_name, concatenated_data, all_labels)
 
