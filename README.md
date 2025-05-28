@@ -124,24 +124,24 @@
      $ tox -e docs
      ```
 
-- **STEP02 Build service**
+- **STEP04 Build service**
      ```
      $ docker build -t uniovi-simur-wearablepermed-hmc:1.0.0 .
      ```
 
-- **STEP03: Tag service**
+- **STEP05: Tag service**
      ```
      $ docker tag uniovi-simur-wearablepermed-hmc:1.0.0 ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0
      ```
 
-- **STEP04: Publish service**
+- **STEP06: Publish service**
      ```
      $ docker logout
      $ docker login
      $ docker push ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0
      ```
 
-- **STEP05: Start converter service**     
+- **STEP07: Start converter service**     
      Set your bin files under Linux **/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data** folder and execute Docker service from **Ubuntu** or **Mac**:
 
      ```
@@ -162,7 +162,7 @@
      python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN --csv-matrix-PMP data/PMP1020_W1_PI.csv
      ```
 
-- **STEP06: Start aggregator service**     
+- **STEP08: Start aggregator service**     
      Set your bin files under Linux **/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data** folder and execute Docker service from **Ubuntu** or **Mac**:
 
      ```
