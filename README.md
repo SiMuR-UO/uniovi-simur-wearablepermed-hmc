@@ -149,7 +149,7 @@
      --rm \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN --csv-matrix-PMP data/PMP1020_W1_PI.csv
+     python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN
      ```
 
      Set your bin files under Windows **c:\Temp\simur** folder and execute Docker service from **Windows** using WSL2 (Ubunut 22.02): 
@@ -159,7 +159,7 @@
      --rm \
      -v /mnt/c/Temp/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN --csv-matrix-PMP data/PMP1020_W1_PI.csv
+     python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN
      ```
 
 - **STEP08: Start aggregator service**     
