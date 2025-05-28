@@ -84,7 +84,26 @@
      $ git clone https://github.com/Simur-project/uniovi-simur-wearablepermed-hmc.git
      ```
 
-- **STEP01**: Build and Debug your project
+- **STEP02**: Create your virtual environment and download dependencies
+     Note: If you don't have the python version necesary to load your dependencies, you must install the python-env version correctly. In this case we install Python3.12 to creete the virtual environment correctly:
+
+     ```
+     $ sudo apt install python3.12-venv
+     ```     
+
+     Later inside your repo execute
+     ```
+     $ python3.12 -m venv .venv
+     $ source .venv/bin/activate
+     $ pip install -r requirements.txt
+     ```
+
+     Finally when finalize develop deactivate your environment like this:
+     ```
+     $ deactivate
+     ```
+
+- **STEP03**: Build and Debug your project
      ```
      $ tox list
      default environments:
