@@ -5,14 +5,14 @@
     "version": "0.2.0",
     "configurations": [        
         {
-            "name": "simur_wearablepermed_hmc",
+            "name": "WearablePerMed HMC",
             //"type": "python",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "args": [
                 "--very-verbose",
-                "--bin-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1003/PMP1003_W1_Acelerometría_Cadera.BIN",
+                "--bin-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1003/PMP1003_W1_DiarioActividades_PiernaInvertido.BIN",
               
                 //"--csv-matrix-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_W1_PI.csv",
                 //"--activity-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_RegistroActividades.xlsx",
