@@ -379,7 +379,7 @@ def apply_scaling_to_matrix_data(WPM_data, K):
 
     return WPM_data_scaled
 
-def load_scale_WPM_data(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALKING_USUAL_SPEED=None):
+def load_scale_WPM_data(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALKING_USUAL_SPEED):
     """
     This function encapsulates the code to perform load and scaling of WPM data
     Segmentation is not applied in this function.

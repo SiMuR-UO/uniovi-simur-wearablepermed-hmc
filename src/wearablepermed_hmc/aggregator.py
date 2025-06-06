@@ -19,6 +19,7 @@ __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)
 
+_DEF_TIME_OFF = True
 _DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 13261119
 _DEF_WINDOW_SIZE_SAMPLES = 250
 _DEF_IMAGES_FOLDER = 'Images_activities'
@@ -52,7 +53,13 @@ def parse_args(args):
         "-activity-PMP",
         "--activity-PMP",
         dest="activity_PMP", 
-        help="string, path to the corresponding Activity Log of the PMP dataset")                
+        help="string, path to the corresponding Activity Log of the PMP dataset")     
+    parser.add_argument(
+        "-has-timeoff",
+        "--has-timeoff",
+        default=_DEF_TIME_OFF,
+        dest="has_timeoff", 
+        help="activity regiter has time off")                  
     parser.add_argument(
         "-calibrate-with-start-WALKING-USUAL-SPEED",
         "--calibrate-with-start-WALKING-USUAL-SPEED",
@@ -125,7 +132,7 @@ def extract_metadata_from_csv(csv_matrix_PMP):
      return array_metadata[0], array_metadata[1], array_metadata[2]
      
 # Returns WPM data properly scaled and the corresponding dictionary timing from the Excel file.
-def scale(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED):
+def scale(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED=None):
     scaled_data, dictionary_timing = load_scale_WPM_data(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED)
 
     return scaled_data, dictionary_timing
@@ -372,11 +379,17 @@ def main(args):
     participant_id, measurement_date, segment_body = extract_metadata_from_csv(args.csv_matrix_PMP)
     
     _logger.debug("Step 01: Starting Scale Data ...")
-    scaled_data, dictionary_timing = scale(
-        args.csv_matrix_PMP,
-        segment_body, 
-        args.activity_PMP,
-        args.calibrate_with_start_WALKING_USUAL_SPEED)
+    if args.has_timeoff == True:
+        scaled_data, dictionary_timing = scale(
+            args.csv_matrix_PMP,
+            segment_body, 
+            args.activity_PMP)        
+    else:
+        scaled_data, dictionary_timing = scale(
+            args.csv_matrix_PMP,
+            segment_body, 
+            args.activity_PMP,
+            args.calibrate_with_start_WALKING_USUAL_SPEED)
 
     _logger.debug("Step 02: Starting Segment Data ...")
     segmented_activity_data = segment(

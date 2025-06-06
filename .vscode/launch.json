@@ -11,13 +11,18 @@
             "request": "launch",
             "program": "${file}",
             "args": [
-                "--very-verbose",
-                "--bin-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1003/PMP1003_W1_DiarioActividades_PiernaInvertido.BIN",
+                //"--very-verbose",
+                //"--bin-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1003/PMP1003_W1_DiarioActividades_PiernaInvertido.BIN",
               
                 //"--csv-matrix-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_W1_PI.csv",
                 //"--activity-PMP", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_import\\PMP1020_RegistroActividades.xlsx",
                 //"--export-folder-name", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_export\\data_tot.npz",
                 //"--make-feature-extractions"
+
+                "--csv-matrix-PMP", "/media/simur/207C300C7C2FDB74/git/uniovi-simur-wearablepermed-data/PMP1047/PMP1047_W1_PI.csv",
+                "--activity-PMP", "/media/simur/207C300C7C2FDB74/git/uniovi-simur-wearablepermed-data/PMP1047/PMP1047_RegistroActividades.xlsx",
+                "--export-folder-name", "/media/simur/207C300C7C2FDB74/git/uniovi-simur-wearablepermed-data/PMP1047/data_tot.npz",
+                "--make-feature-extractions"
             ],
             "console": "integratedTerminal",
             "justMyCode":false
