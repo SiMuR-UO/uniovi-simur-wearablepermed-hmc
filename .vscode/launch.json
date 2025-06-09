@@ -19,9 +19,11 @@
                 //"--export-folder-name", "D:\\libreria_simur_hmc_17_03_2025\\simur_hmc\\tests\\data_export\\data_tot.npz",
                 //"--make-feature-extractions"
 
-                "--csv-matrix-PMP", "/media/simur/207C300C7C2FDB74/git/uniovi-simur-wearablepermed-data/PMP1047/PMP1047_W1_PI.csv",
-                "--activity-PMP", "/media/simur/207C300C7C2FDB74/git/uniovi-simur-wearablepermed-data/PMP1047/PMP1047_RegistroActividades.xlsx",
-                "--export-folder-name", "/media/simur/207C300C7C2FDB74/git/uniovi-simur-wearablepermed-data/PMP1047/data_tot.npz",
+                "--csv-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1024/PMP1024_W1_PI.csv",
+                "--activity-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1024/PMP1024_RegistroActividades.xlsx",
+                "--export-folder-name", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1024/data_1024_tot_PI.npz",                   
+                "--has-timeoff", "False",
+                "--calibrate-with-start-WALKING-USUAL-SPEED", "15778800",
                 "--make-feature-extractions"
             ],
             "console": "integratedTerminal",

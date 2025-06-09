@@ -20,7 +20,7 @@ __license__ = "MIT"
 _logger = logging.getLogger(__name__)
 
 _DEF_TIME_OFF = True
-_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 13261119
+_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 15778800
 _DEF_WINDOW_SIZE_SAMPLES = 250
 _DEF_IMAGES_FOLDER = 'Images_activities'
 _DEF_STACK_OF_DATA_EXPORTED = 'data_tot.npz'
@@ -63,6 +63,7 @@ def parse_args(args):
     parser.add_argument(
         "-calibrate-with-start-WALKING-USUAL-SPEED",
         "--calibrate-with-start-WALKING-USUAL-SPEED",
+        type=int,
         default=_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED,
         dest="calibrate_with_start_WALKING_USUAL_SPEED", 
         help="int. The sample, visually inspected, that corresponds to the start of the 'WALKING-USUAL SPEED' activity. If not specified, its default value is None")    
