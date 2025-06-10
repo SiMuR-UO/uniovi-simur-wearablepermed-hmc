@@ -78,6 +78,15 @@
      ```
      $ pip freeze > requirements.txt
      ```
+
+- **STEP05**: if you have some problems with the dependencies and your python environment install the pur command and execute 
+
+     ```
+     $ pip install pur
+     $ pur -r requirements.txt
+     $ pip install -r requirements.txt
+     ```
+
 ## Start develop your project
 - **STEP01**: Clone your project
      ```
