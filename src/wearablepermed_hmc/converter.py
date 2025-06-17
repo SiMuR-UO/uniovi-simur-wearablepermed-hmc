@@ -6,8 +6,8 @@ import os
 from data_import._bin2csv_0616 import bin2csv
 from pathlib import Path
 
-__author__ = "Miguel Angel Salinas Gancedo"
-__copyright__ = "Miguel Angel Salinas Gancedo"
+__author__ = "Miguel Salinas <uo34525@uniovi.es>, Alejandro <uo265351@uniovi.es>"
+__copyright__ = "Uniovi"
 __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)

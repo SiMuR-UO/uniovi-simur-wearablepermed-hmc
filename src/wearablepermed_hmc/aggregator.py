@@ -13,8 +13,8 @@ from basic_functions._autocalibration import count_stuck_vals, get_calibration_c
 
 from basic_functions._spectral_features_calculator import obtener_caracteristicas_espectrales
 
-__author__ = "Alejandro Castellanos Alonso, Miguel Angel Salinas Gancedo"
-__copyright__ = "Miguel Angel Salinas Gancedo, Alejandro Castellanos Alonso"
+__author__ = "Miguel Salinas <uo34525@uniovi.es>, Alejandro <uo265351@uniovi.es>"
+__copyright__ = "Uniovi"
 __license__ = "MIT"
 
 _logger = logging.getLogger(__name__)
