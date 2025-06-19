@@ -131,7 +131,6 @@ def parse_args(args):
     )    
     return parser.parse_args(args)
 
-
 def setup_logging(loglevel):
     """Setup basic logging
 
