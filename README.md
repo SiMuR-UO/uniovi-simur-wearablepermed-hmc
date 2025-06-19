@@ -171,7 +171,7 @@
      python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN
      ```
 
-- **STEP08: Start aggregator service**     
+- **STEP08: Start windowed service**     
      Set your bin files under Linux **/home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data** folder and execute Docker service from **Ubuntu** or **Mac**:
 
      ```
@@ -179,7 +179,7 @@
      --rm \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.1.0 \
-     python aggregator.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx --file-name PMP-1020
+     python windowed.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx --file-name PMP-1020
      ```
 
      Set your bin files under Windows **c:\Temp\simur** folder and execute Docker service from **Windows** using WSL2 (Ubunut 22.02): 
@@ -189,8 +189,11 @@
      --rm \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
-     python aggregator.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx
+     python windowed.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx
      ```
+
+- **STEP09: Start agregation service**  
+     [TODO]
 
 <!-- pyscaffold-notes -->
 
