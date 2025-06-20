@@ -30,7 +30,8 @@ _ACTIVITIES = ['CAMINAR CON LA COMPRA', 'CAMINAR CON MÓVIL O LIBRO', 'CAMINAR U
                'DE PIE MOVIENDO LIBROS', 'DE PIE USANDO PC', 'FASE REPOSO CON K5',
                'INCREMENTAL CICLOERGOMETRO', 'SENTADO LEYENDO', 'SENTADO USANDO PC',
                'SENTADO VIENDO LA TV', 'SIT TO STAND 30 s', 'SUBIR Y BAJAR ESCALERAS',
-               'TAPIZ RODANTE', 'TROTAR', 'YOGA', 'ACTIVIDAD NO ESTRUCTURADA']
+               'TAPIZ RODANTE', 'TROTAR', 'YOGA', 'ACTIVIDAD NO ESTRUCTURADA'
+               ]
 
 
 def parse_args(args):
@@ -160,7 +161,10 @@ def autocalibrate(segmented_activity_data):
     datos_acc_actividad_no_estructurada_autocalibrados_W1_PI, slope, offset = auto_calibrate(datos_acc_actividad_no_estructurada, fm = 25)
     for actividad in _ACTIVITIES:
         segmented_activity_data[actividad][:,1:4] = segmented_activity_data[actividad][:,1:4] * slope + offset # muslo
-        
+    
+    # remove the not estructure data
+    segmented_activity_data.pop('ACTIVIDAD NO ESTRUCTURADA')
+
     return segmented_activity_data
 
 def windowing(segmented_activity_data, window_size_samples):

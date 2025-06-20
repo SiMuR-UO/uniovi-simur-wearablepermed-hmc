@@ -16,19 +16,18 @@
                 //"--bin-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1003/PMP1003_W1_DiarioActividades_PiernaInvertido.BIN",
 
                 // STEP02: Windowed
-                //"--csv-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1024/PMP1024_W1_PI.csv",
-                //"--activity-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1024/PMP1024_RegistroActividades.xlsx",
-                //"--export-folder-name", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1024/data_1024_tot_PI.npz",                   
+                "--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/PMP1011/PMP1011_W1_M.csv",
+                "--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/PMP1011/PMP1011_RegistroActividades.xlsx",
+                "--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/PMP1011/data_1011_tot_M.npz",                   
                 //"--has-timeoff", "False",
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15778800",
-                //"--make-feature-extractions"
+                "--make-feature-extractions"
 
                 // STEP03: Aggregator
-                "--ml-models","ESANN,RandomForest",
-                "--ml-sensors", "thigh,wrist",
-                //"--dataset-folder", "D:\\GIT_16_06_2025\\uniovi-simur-wearablepermed-ml\\datos",
-                "--dataset-folder", "/media/simur/6783d1af-1ed0-4f47-9803-b055f0cae11e1/git/uniovi-simur-wearablepermed-data",
-                "--participants-file", "participants.txt"
+                //"--ml-models","ESANN,RandomForest",
+                //"--ml-sensors", "thigh,wrist",
+                //"--dataset-folder", "/media/simur/6783d1af-1ed0-4f47-9803-b055f0cae11e1/git/uniovi-simur-wearablepermed-data",
+                //"--participants-file", "participants.txt"
             ],
             "console": "integratedTerminal",
             "justMyCode":false
