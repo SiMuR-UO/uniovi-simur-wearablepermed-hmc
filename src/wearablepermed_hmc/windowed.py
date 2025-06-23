@@ -160,7 +160,10 @@ def autocalibrate(segmented_activity_data):
     datos_acc_actividad_no_estructurada = segmented_activity_data['ACTIVIDAD NO ESTRUCTURADA'][:,0:4]  # timestamps y datos de aceleraciónprint(datos_acc_actividad_no_estructurada)
     datos_acc_actividad_no_estructurada_autocalibrados_W1_PI, slope, offset = auto_calibrate(datos_acc_actividad_no_estructurada, fm = 25)
     for actividad in _ACTIVITIES:
-        segmented_activity_data[actividad][:,1:4] = segmented_activity_data[actividad][:,1:4] * slope + offset # muslo
+        try:
+            segmented_activity_data[actividad][:,1:4] = segmented_activity_data[actividad][:,1:4] * slope + offset # muslo
+        except Exception as e:
+            print(e)
     
     # remove the not estructure data
     segmented_activity_data.pop('ACTIVIDAD NO ESTRUCTURADA')

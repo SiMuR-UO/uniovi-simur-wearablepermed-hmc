@@ -121,10 +121,14 @@ def segment_WPM_activity_data(dictionary_hours_wpm, imu_data):
 
     # Iterate over the activity definitions and segment data
     for activity_name, start_key, end_key, start_date_key, end_date_key in activities:
-        start_time = datetime.combine(dictionary_hours_wpm[start_date_key], dictionary_hours_wpm[start_key])
-        end_time = datetime.combine(dictionary_hours_wpm[end_date_key], dictionary_hours_wpm[end_key])
-        data = segment_MATRIX_data_by_dates(imu_data, start_time, end_time)
-        segmented_data_wpm[activity_name] = data
+        if (dictionary_hours_wpm[start_key] is not None and
+            dictionary_hours_wpm[end_key] is not None and 
+            dictionary_hours_wpm[start_date_key] is not None and 
+            dictionary_hours_wpm[end_date_key] is not None):
+                start_time = datetime.combine(dictionary_hours_wpm[start_date_key], dictionary_hours_wpm[start_key])
+                end_time = datetime.combine(dictionary_hours_wpm[end_date_key], dictionary_hours_wpm[end_key])        
+                data = segment_MATRIX_data_by_dates(imu_data, start_time, end_time)        
+                segmented_data_wpm[activity_name] = data
 
     return segmented_data_wpm
 
@@ -159,17 +163,19 @@ def plot_segmented_WPM_data(WPM_data, images_folder_name, csv_matrix_PMP):
     
     image_file_name = Path(csv_matrix_PMP).stem
     for activity in activities:
-        plt.figure()
-        activity_data = WPM_data[activity]
-        plt.plot(activity_data[:, 1:4])  # Plot acceleration data (columns 1 to 3)
-        plt.title(activity)
-        plt.xlabel('Sample [-]')
-        plt.ylabel('Accelerometer data [g]')
-        plt.grid(True)
+        try:
+            plt.figure()
+            activity_data = WPM_data[activity]
+            plt.plot(activity_data[:, 1:4])  # Plot acceleration data (columns 1 to 3)
+            plt.title(activity)
+            plt.xlabel('Sample [-]')
+            plt.ylabel('Accelerometer data [g]')
+            plt.grid(True)
 
-        file_name = os.path.join(full_path, image_file_name + '_' + activity + '.jpg')
-        plt.savefig(file_name, format='jpg')
-
+            file_name = os.path.join(full_path, image_file_name + '_' + activity + '.jpg')
+            plt.savefig(file_name, format='jpg')
+        except Exception as e:
+            print(e)
 
 ################ Windowing and Stacking Functions ################
 
