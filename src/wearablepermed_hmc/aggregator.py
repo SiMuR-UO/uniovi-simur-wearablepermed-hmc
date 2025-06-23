@@ -82,6 +82,13 @@ def parse_args(args):
     """
     parser = argparse.ArgumentParser(description="Machine Learning Model Trainer")
     parser.add_argument(
+        "-case-id",
+        "--case-id",
+        dest="case_id",
+        required=True,
+        help="Case unique identifier."
+    )    
+    parser.add_argument(
         "-ml-models",
         "--ml-models",
         type=parse_ml_model,
@@ -112,7 +119,14 @@ def parse_args(args):
         type=argparse.FileType("r"),
         required=True,
         help="Choose the dataset participant text file"
-    )  
+    )
+    parser.add_argument(
+        "-case-id-folder",
+        "--case-id-folder",
+        dest="case_id_folder",
+        required=True,
+        help="Choose the case id root folder."
+    )      
     parser.add_argument(
         "-v",
         "--verbose",
@@ -203,7 +217,7 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
         participant_sensor_feature_all_file = os.path.join(participant_folder, 'data_' + participant + "_features_all.npz")
         np.savez(participant_sensor_feature_all_file, participant_feature_dataset, participant_feature_label_dataset) 
                 
-def combine_datasets(dataset_folder, participants, sensors):
+def combine_datasets(case_id_folder, dataset_folder, participants, sensors):
     dataset = []
     dataset_label = []
     dataset_feature = []
@@ -247,14 +261,14 @@ def combine_datasets(dataset_folder, participants, sensors):
         dataset = np.concatenate(dataset, axis=0)
         dataset_label = np.concatenate(dataset_label, axis=0)
     
-        dataset_all_file = os.path.join(dataset_folder, "data_all.npz")
+        dataset_all_file = os.path.join(case_id_folder, "data_all.npz")
         np.savez(dataset_all_file, dataset, dataset_label)
     
     if len(dataset_feature) > 0:
         dataset_feature = np.concatenate(dataset_feature, axis=0)
         dataset_feature_label = np.concatenate(dataset_feature_label, axis=0)
                 
-        dataset_feature_all_file = os.path.join(dataset_folder, "data_feature_all.npz")
+        dataset_feature_all_file = os.path.join(case_id_folder, "data_feature_all.npz")
         np.savez(dataset_feature_all_file, dataset_feature, dataset_feature_label)                              
 
 def main(args):
@@ -272,6 +286,10 @@ def main(args):
 
     _logger.info("Agregator starts here")
 
+    # create the output case id folder if not exist
+    case_id_folder = os.path.join(args.case_id_folder, args.case_id)
+    os.makedirs(case_id_folder, exist_ok=True)
+
     participants = []
     for line in args.participants_file:
         participants = participants + line.strip().split(',')
@@ -282,7 +300,7 @@ def main(args):
             combine_participant_dataset(args.dataset_folder, participant, args.ml_models[0], args.ml_sensors[0])
     
     # Total datasets agregation
-    combine_datasets(args.dataset_folder, participants, args.ml_sensors[0])
+    combine_datasets(case_id_folder, args.dataset_folder, participants, args.ml_sensors[0])
 
     _logger.info("Script ends here")
 

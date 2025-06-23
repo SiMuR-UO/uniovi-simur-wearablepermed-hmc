@@ -13,21 +13,23 @@
             "args": [
                 "--very-verbose",
                 // STEP01: Converter
-                //"--bin-matrix-PMP", "/home/simur/git/uniovi-simur-wearablepermed-data/PMP1003/PMP1003_W1_DiarioActividades_PiernaInvertido.BIN",
+                //"--bin-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1003/PMP1003_W1_Acelerometría_Muñeca.BIN",
 
                 // STEP02: Windowed
-                //"--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/PMP1011/PMP1011_W1_M.csv",
-                //"--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/PMP1011/PMP1011_RegistroActividades.xlsx",
-                //"--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/PMP1011/data_1011_tot_M.npz",                   
+                //"--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1011/PMP1011_W1_M.csv",
+                //"--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1011/PMP1011_RegistroActividades.xlsx",
+                //"--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1011/data_1011_tot_M.npz",                   
+                //"--make-feature-extractions"                
                 //"--has-timeoff", "False",
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15778800",
-                //"--make-feature-extractions"
 
                 // STEP03: Aggregator
-                "--ml-models","ESANN,RandomForest",
+                "--case-id", "case_01",
+                "--ml-models","ESANN",
                 "--ml-sensors", "thigh,wrist",
-                "--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data",
-                "--participants-file", "participants.txt"
+                "--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",
+                "--participants-file", "participants.txt",
+                "--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",
             ],
             "console": "integratedTerminal",
             "justMyCode":false
