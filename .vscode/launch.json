@@ -6,7 +6,6 @@
     "configurations": [        
         {
             "name": "WearablePerMed HMC",
-            //"type": "python",
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
@@ -25,9 +24,9 @@
 
                 // STEP03: Aggregator
                 //"--case-id", "case_01",
+                //"--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",                
                 //"--ml-models","ESANN",
                 //"--ml-sensors", "thigh,wrist",
-                //"--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",
                 //"--participants-file", "participants.txt",
                 //"--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",
             ],
