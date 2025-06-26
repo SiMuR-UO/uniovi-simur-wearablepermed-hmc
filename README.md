@@ -156,6 +156,7 @@
      ```
      $ docker run \
      --rm \
+     --user $(id -u):$(id -g) \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
      python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN
@@ -166,6 +167,7 @@
      ```
      $ docker run \
      --rm \
+     --user $(id -u):$(id -g) \
      -v /mnt/c/Temp/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
      python converter.py --bin-matrix-PMP data/PMP1020_W1_PI.BIN
