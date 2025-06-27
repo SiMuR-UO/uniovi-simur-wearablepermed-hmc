@@ -179,6 +179,7 @@
      ```
      $ docker run \
      --rm \
+     --user $(id -u):$(id -g) \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.1.0 \
      python windowed.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx --file-name PMP-1020
@@ -189,6 +190,7 @@
      ```
      $ docker run \
      --rm \
+     --user $(id -u):$(id -g) \
      -v /home/miguel/git/uniovi/simur/uniovi-simur-wearablepermed-hmc/data:/app/data \
      ofertoio/uniovi-simur-wearablepermed-hmc:1.0.0 \
      python windowed.py --csv-matrix-PMP data/PMP1020_W1_PI.csv --activity-PMP data/PMP1020_RegistroActividades.xlsx
