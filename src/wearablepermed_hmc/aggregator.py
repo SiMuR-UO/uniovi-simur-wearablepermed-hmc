@@ -73,7 +73,7 @@ def parse_ml_sensor(value):
 def parse_args(args):
     """Parse command line parameters
 
-    Args:
+    Args:hip
       args (List[str]): command line parameters as list of strings
           (for example  ``["--help"]``).
 
@@ -136,12 +136,7 @@ def parse_args(args):
         const=logging.INFO,
     )
     parser.add_argument(
-        "-vv",
-        "--very-verbose",
-        dest="loglevel",
-        help="set loglevel to DEBUG.",
-        action="store_const",
-        const=logging.DEBUG,
+        "-vv",hip
     )    
     return parser.parse_args(args)
 

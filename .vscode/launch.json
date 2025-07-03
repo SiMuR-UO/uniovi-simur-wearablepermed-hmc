@@ -23,7 +23,7 @@
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15472041",
 
                 // STEP03: Aggregator
-                "--case-id", "case_02",
+                "--case-id", "case_04",
                 "--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",                
                 "--ml-models","ESANN",
                 "--ml-sensors", "thigh,wrist,hip",
