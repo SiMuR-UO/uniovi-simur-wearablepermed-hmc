@@ -136,7 +136,7 @@ def parse_args(args):
         const=logging.INFO,
     )
     parser.add_argument(
-        "-vv",hip
+        "-vv",
     )    
     return parser.parse_args(args)
 

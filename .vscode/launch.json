@@ -10,22 +10,21 @@
             "request": "launch",
             "program": "${file}",
             "args": [
-                "--very-verbose",
                 // STEP01: Converter
                 //"--bin-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1003/PMP1003_W1_Acelerometría_Muñeca.BIN",
 
                 // STEP02: Windowed
-                //"--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1081/PMP1081_W1_M.csv",
-                //"--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1081/PMP1081_RegistroActividades.xlsx",
-                //"--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1081/data_1081_tot_M.npz",                   
+                //"--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1078/PMP1078_W1_C.csv",
+                //"--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1078/PMP1078_RegistroActividades.xlsx",
+                //"--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1078/data_1078_tot_C.npz",                   
                 //"--make-feature-extractions",                
                 //"--has-timeoff", "False",
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15472041",
 
                 // STEP03: Aggregator
-                "--case-id", "case_04",
+                "--case-id", "case_06",
                 "--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",                
-                "--ml-models","ESANN",
+                "--ml-models","RandomForest",
                 "--ml-sensors", "thigh,wrist,hip",
                 "--participants-file", "participants.txt",
                 "--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",
