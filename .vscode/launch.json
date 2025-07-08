@@ -14,20 +14,21 @@
                 //"--bin-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1003/PMP1003_W1_Acelerometría_Muñeca.BIN",
 
                 // STEP02: Windowed
-                //"--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1078/PMP1078_W1_C.csv",
-                //"--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1078/PMP1078_RegistroActividades.xlsx",
-                //"--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1078/data_1078_tot_C.npz",                   
-                //"--make-feature-extractions",                
+                "--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/PMP1053_W1_PI.csv",
+                "--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/PMP1053_RegistroActividades.xlsx",
+                "--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/data_1053_tot_week_PI.npz",                   
+                "--make-feature-extractions",                
+                "--include-not-estructure-data",
                 //"--has-timeoff", "False",
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15472041",
 
                 // STEP03: Aggregator
-                "--case-id", "case_06",
-                "--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",                
-                "--ml-models","RandomForest",
-                "--ml-sensors", "thigh,wrist,hip",
-                "--participants-file", "participants.txt",
-                "--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",
+                //"--case-id", "case_06",
+                //"--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",                
+                //"--ml-models","RandomForest",
+                //"--ml-sensors", "thigh,wrist,hip",
+                //"--participants-file", "participants.txt",
+                //"--case-id-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/output",
             ],
             "console": "integratedTerminal",
             "justMyCode":false

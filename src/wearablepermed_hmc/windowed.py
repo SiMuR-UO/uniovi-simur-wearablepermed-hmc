@@ -89,7 +89,13 @@ def parse_args(args):
         "--make-feature-extractions",
         dest="make_feature_extractions",
         action='store_true',
-        help="make feature extractions?.")          
+        help="make feature extractions?.")
+    parser.add_argument(
+        "-include-not-estructure-data",
+        "--include-not-estructure-data",
+        dest="include_not_estructure_data",
+        action='store_true',
+        help="Include estructure data.")                   
     parser.add_argument(
         "-v",
         "--verbose",
@@ -155,7 +161,7 @@ def segment(scaled_data, dictionary_timing):
 def plot(segmented_activity_data, images_folder_name, csv_matrix_PMP):
     plot_segmented_WPM_data(segmented_activity_data, images_folder_name, csv_matrix_PMP)
 
-def autocalibrate(segmented_activity_data):
+def autocalibrate(args, segmented_activity_data):
     datos_acc_actividad_no_estructurada = segmented_activity_data['ACTIVIDAD NO ESTRUCTURADA'][:,0:4]  # timestamps y datos de aceleraciónprint(datos_acc_actividad_no_estructurada)
     datos_acc_actividad_no_estructurada_autocalibrados_W1_PI, slope, offset = auto_calibrate(datos_acc_actividad_no_estructurada, fm = 25)
     for actividad in _ACTIVITIES:
@@ -165,7 +171,8 @@ def autocalibrate(segmented_activity_data):
             print(e)
     
     # remove the not estructure data
-    segmented_activity_data.pop('ACTIVIDAD NO ESTRUCTURADA')
+    if (args.include_not_estructure_data == False):
+        segmented_activity_data.pop('ACTIVIDAD NO ESTRUCTURADA')
 
     return segmented_activity_data
 
@@ -269,11 +276,7 @@ def extract_features(data):
             # Guardamos los resultados en las matrices correspondientes
             # f1_mat[i, j]      = f1
             # p1_mat[i, j]      = p1
-            # f2_mat[i, j]      = f2
-            # p2_mat[i, j]      = p2
-            # entropy_mat[i, j] = entropy
-            
-            picos_totales[j] = numero_picos
+            # f2_mat[itales[j] = numero_picos
             prominencias_totales[j] = prominencia_media
             
         picos_totales_2 = np.reshape(picos_totales,(1,-1))
@@ -409,7 +412,7 @@ def main(args):
         args.csv_matrix_PMP)
 
     _logger.debug("Step 04: Starting Autocalibrating Data ...")
-    segmented_activity_data_autocalibrated = autocalibrate(segmented_activity_data)
+    segmented_activity_data_autocalibrated = autocalibrate(args, segmented_activity_data)
     
     _logger.debug("Step 05: Starting Windowing Data ...")
     windowed_data, labels = windowing(segmented_activity_data_autocalibrated, args.window_size_samples)
