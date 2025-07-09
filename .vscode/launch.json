@@ -14,13 +14,22 @@
                 //"--bin-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1003/PMP1003_W1_Acelerometría_Muñeca.BIN",
 
                 // STEP02: Windowed
-                "--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/PMP1053_W1_PI.csv",
-                "--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/PMP1053_RegistroActividades.xlsx",
-                "--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/data_1053_tot_week_PI.npz",                   
-                "--make-feature-extractions",                
-                "--include-not-estructure-data",
+                // "--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/PMP1053_W1_PI.csv",
+                // "--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/PMP1053_RegistroActividades.xlsx",
+                // "--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1053/data_1053_tot_week_PI.npz",                   
+                // "--make-feature-extractions",                
+                // "--include-not-estructure-data",
                 //"--has-timeoff", "False",
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15472041",
+
+                // Trials with the start time readed from .csv file
+                "--csv-matrix-PMP", "D:\\DATA_PMP_File_Server\\PMP1020_W1_PI.csv",
+                "--activity-PMP", "D:\\DATA_PMP_File_Server\\PMP1020_RegistroActividades.xlsx",
+                "--export-folder-name", "D:\\DATA_PMP_File_Server\\data_1020_tot_PI.npz",                   
+                "--make-feature-extractions",                
+                "--has-timeoff", "False",
+                "--calibrate-with-start-WALKING-USUAL-SPEED", "13261111",
+                "--start-time-WALKING-USUAL-SPEED", "10:05:10"
 
                 // STEP03: Aggregator
                 //"--case-id", "case_06",
