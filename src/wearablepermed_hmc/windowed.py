@@ -24,6 +24,8 @@ _DEF_TIME_OFF = True
 _DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 15778800
 _DEF_WINDOW_SIZE_SAMPLES = 250
 _DEF_IMAGES_FOLDER = 'Images_activities'
+_DEF_WINDOWS_BALANCED_MEAN = 12 # for all tasks (training + test)
+_DEF_WINDOWS_BALANCED_THRESHOLD = 100 # for all windows (training + test)
 
 _ACTIVITIES = ['CAMINAR CON LA COMPRA', 'CAMINAR CON MÓVIL O LIBRO', 'CAMINAR USUAL SPEED',
                'CAMINAR ZIGZAG', 'DE PIE BARRIENDO', 'DE PIE DOBLANDO TOALLAS',
@@ -197,6 +199,22 @@ def windowing(segmented_activity_data, window_size_samples):
     
     return windowed_data, labels_thigh
 
+def balanced(data, labels):
+    # compare the depth shape with balanced value    
+    if abs(data[0].shape[0] - _DEF_WINDOWS_BALANCED_MEAN) < _DEF_WINDOWS_BALANCED_THRESHOLD:
+        # remove data
+        return None, None 
+    elif abs(data[0].shape[0]  - _DEF_WINDOWS_BALANCED_MEAN) > _DEF_WINDOWS_BALANCED_THRESHOLD:
+        # Balance data
+        random_indexes = [np.random.randint(0, data[0].shape[0]) for _ in range(_DEF_WINDOWS_BALANCED_MEAN)]
+
+        data_balanced = data[0][random_indexes]
+        labels_balanced = [labels[index] for index in random_indexes]
+
+        return data_balanced, labels_balanced
+    else:
+        return data, labels
+        
 def stack(windowed_data, segment_body, export_folder_name):
     if not os.path.isfile(export_folder_name):
         # Create the file
@@ -204,13 +222,37 @@ def stack(windowed_data, segment_body, export_folder_name):
             file.write("")  # Creates an empty file
             _logger.debug("File did not exist, so it was created.")
 
+    sub_concatenated_data = []
+    sub_all_labels = []
+    activity_previous = list(windowed_data.keys())[0]
+    index = 0
+
     concatenated_data = []
     all_labels = []
     for activity, data in windowed_data.items():
         data_selected = data[:, 1:7, :]
-        concatenated_data.append(data_selected)
-        all_labels.extend([activity] * data_selected.shape[0])
         
+        if activity != activity_previous or index == len(list(windowed_data.keys())) - 1:
+            # balanced data before stack
+            sub_concatenated_balanced_data, sub_all_balanced_labels = balanced(sub_concatenated_data, sub_all_labels)
+
+            # append sub labels windows
+            if sub_concatenated_balanced_data is not None:
+                concatenated_data.append(sub_concatenated_balanced_data)
+                all_labels.append(sub_all_balanced_labels)
+            
+            sub_concatenated_data = []
+            sub_concatenated_data.append(data_selected)
+            sub_all_labels = []
+            sub_all_labels.extend([activity] * data_selected.shape[0])
+        else:
+            # append all windows
+            sub_concatenated_data.append(data_selected)            
+            sub_all_labels.extend([activity] * data_selected.shape[0])
+
+        activity_previous = activity
+        index = index + 1
+
     # Convertir la lista de arrays en un array final si no está vacío
     if concatenated_data:
         concatenated_data = np.vstack(concatenated_data)
@@ -392,7 +434,10 @@ def export_data(concatenated_data, all_labels, export_folder_name):
 def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
-    
+
+    # set predictable any random numpy function on all service
+    np.random.seed(42)
+
     _logger.info("Windowed starts here")
 
     _logger.debug("Step 00: Extracting metadata ...")
@@ -430,6 +475,7 @@ def main(args):
     
     _logger.debug("Step 06: Starting Stacking Data ...")
     concatenated_data, all_labels = stack(windowed_data, segment_body, args.export_folder_name)
+
     export_data(concatenated_data, all_labels, args.export_folder_name) 
 
     if args.make_feature_extractions == True:
