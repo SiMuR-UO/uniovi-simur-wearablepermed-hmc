@@ -285,11 +285,8 @@ def extract_features(data):
                 # prominencia_media = np.NaN
                 prominencia_media = 0
             
-            #prominencias_picos = propiedades_picos['prominences']
             # Guardamos los resultados en las matrices correspondientes
-            # f1_mat[i, j]      = f1
-            # p1_mat[i, j]      = p1
-            # f2_mat[itales[j] = numero_picos
+            picos_totales[j] = numero_picos
             prominencias_totales[j] = prominencia_media
             
         picos_totales_2 = np.reshape(picos_totales,(1,-1))
