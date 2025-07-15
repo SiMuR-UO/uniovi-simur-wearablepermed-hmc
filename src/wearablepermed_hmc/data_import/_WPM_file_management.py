@@ -256,7 +256,7 @@ def load_WPM_data(csv_file, segment):
     elif segment == "C":
         return load_MATRIX_data_by_index(csv_file, np.array([-1, -3, -2]))
 
-def calculate_accelerometer_drift(WPM_data, excel_file_path, body_segment, walk_usual_speed_start_sample=None):
+def calculate_accelerometer_drift(WPM_data, excel_file_path, body_segment, walk_usual_speed_start_sample=None, start_time_WALKING_USUAL_SPEED=None):
     """
     This function calculates the drift of the MATRIX accelerometer by determining the scaling
     required between the timestamp data from the MATRIX .CSV file and the corresponding Activity Log.
@@ -330,9 +330,11 @@ def calculate_accelerometer_drift(WPM_data, excel_file_path, body_segment, walk_
         return K
     elif matrix_power_off_date is None:
         walk_start_date_cell = "E112"
-        walk_start_time_cell = "D219"
+        # walk_start_time_cell = "D219"
         walk_start_date = read_date_from_excel(excel_file_path, "Hoja1", walk_start_date_cell)
-        walk_start_time = read_time_from_excel(excel_file_path, "Hoja1", walk_start_time_cell)
+        # walk_start_time = read_time_from_excel(excel_file_path, "Hoja1", walk_start_time_cell)
+        # We use the .csv file with the sample number and the start time of a known activity
+        walk_start_time = start_time_WALKING_USUAL_SPEED
         walk_start_datetime = datetime.combine(walk_start_date, walk_start_time)
         excel_walk_start_timestamp_sec = walk_start_datetime.timestamp()
         excel_walk_start_timestamp_ms = excel_walk_start_timestamp_sec * 1000
@@ -379,7 +381,7 @@ def apply_scaling_to_matrix_data(WPM_data, K):
 
     return WPM_data_scaled
 
-def load_scale_WPM_data(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALKING_USUAL_SPEED):
+def load_scale_WPM_data(csv_file_PMP, segment_body, excel_file_path, calibrate_with_start_WALKING_USUAL_SPEED, start_time_WALKING_USUAL_SPEED):
     """
     This function encapsulates the code to perform load and scaling of WPM data
     Segmentation is not applied in this function.
@@ -406,7 +408,7 @@ def load_scale_WPM_data(csv_file_PMP, segment_body, excel_file_path, calibrate_w
     dictionary_timing_WPM_PMP = extract_WPM_info_from_excel(excel_file_path)                         # Read timestamps stored in the cells of the activity log
 
     # ******************************* TIMESTAMP SCALING *************************************
-    K = calculate_accelerometer_drift(WPM_data_W1, excel_file_path, segment_body, calibrate_with_start_WALKING_USUAL_SPEED) # Calculate scaling factor for MATRIX timestamps
+    K = calculate_accelerometer_drift(WPM_data_W1, excel_file_path, segment_body, calibrate_with_start_WALKING_USUAL_SPEED, start_time_WALKING_USUAL_SPEED) # Calculate scaling factor for MATRIX timestamps
     WPM_data_PMP_W1_SCALED = apply_scaling_to_matrix_data(WPM_data_W1, K)                                                              # Apply scaling
     
     return WPM_data_PMP_W1_SCALED, dictionary_timing_WPM_PMP

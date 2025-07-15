@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime
 import logging
 import sys
 from pathlib import Path
@@ -33,6 +34,12 @@ _ACTIVITIES = ['CAMINAR CON LA COMPRA', 'CAMINAR CON MÓVIL O LIBRO', 'CAMINAR U
                ]
 
 
+def parse_time(time_str):
+    try:
+        return datetime.strptime(time_str, "%H:%M:%S").time()
+    except ValueError:
+        raise argparse.ArgumentTypeError("El formato debe ser HH:MM:SS")
+
 def parse_args(args):
     """Parse command line parameters
 
@@ -66,7 +73,13 @@ def parse_args(args):
         type=int,
         default=_DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED,
         dest="calibrate_with_start_WALKING_USUAL_SPEED", 
-        help="int. The sample, visually inspected, that corresponds to the start of the 'WALKING-USUAL SPEED' activity. If not specified, its default value is None")    
+        help="int. The sample, visually inspected, that corresponds to the start of the 'WALKING-USUAL SPEED' activity. If not specified, its default value is None")
+    parser.add_argument(
+        "-start-time-WALKING-USUAL-SPEED",
+        "--start-time-WALKING-USUAL-SPEED",
+        type=parse_time,
+        dest="start_time_WALKING_USUAL_SPEED", 
+        help="datetime.time. Hour in format HH:MM:SS. Start time of a known activity, extracted from the Missing_end_datetimes.csv file previously written.")    
     parser.add_argument(
         "-window-size-samples",
         "--window-size-samples",
@@ -139,8 +152,8 @@ def extract_metadata_from_csv(csv_matrix_PMP):
      return array_metadata[0], array_metadata[1], array_metadata[2]
      
 # Returns WPM data properly scaled and the corresponding dictionary timing from the Excel file.
-def scale(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED=None):
-    scaled_data, dictionary_timing = load_scale_WPM_data(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED)
+def scale(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED=None, start_time_WALKING_USUAL_SPEED=None):
+    scaled_data, dictionary_timing = load_scale_WPM_data(csv_matrix_PMP, segment_body, activity_PMP, calibrate_with_start_WALKING_USUAL_SPEED, start_time_WALKING_USUAL_SPEED)
 
     return scaled_data, dictionary_timing
 
@@ -272,11 +285,8 @@ def extract_features(data):
                 # prominencia_media = np.NaN
                 prominencia_media = 0
             
-            #prominencias_picos = propiedades_picos['prominences']
             # Guardamos los resultados en las matrices correspondientes
-            # f1_mat[i, j]      = f1
-            # p1_mat[i, j]      = p1
-            # f2_mat[itales[j] = numero_picos
+            picos_totales[j] = numero_picos
             prominencias_totales[j] = prominencia_media
             
         picos_totales_2 = np.reshape(picos_totales,(1,-1))
@@ -399,7 +409,8 @@ def main(args):
             args.csv_matrix_PMP,
             segment_body, 
             args.activity_PMP,
-            args.calibrate_with_start_WALKING_USUAL_SPEED)
+            args.calibrate_with_start_WALKING_USUAL_SPEED,
+            args.start_time_WALKING_USUAL_SPEED)
 
     _logger.debug("Step 02: Starting Segment Data ...")
     segmented_activity_data = segment(
