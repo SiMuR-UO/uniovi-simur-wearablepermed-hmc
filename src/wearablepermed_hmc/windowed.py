@@ -25,7 +25,7 @@ _DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 15778800
 _DEF_WINDOW_SIZE_SAMPLES = 250
 _DEF_IMAGES_FOLDER = 'Images_activities'
 _DEF_WINDOWS_BALANCED_MEAN = 12 # for all tasks (training + test)
-_DEF_WINDOWS_BALANCED_THRESHOLD = 100 # for all windows (training + test)
+_DEF_WINDOWS_BALANCED_THRESHOLD = 50 # for all windows (training + test)
 
 _ACTIVITIES = ['CAMINAR CON LA COMPRA', 'CAMINAR CON MÓVIL O LIBRO', 'CAMINAR USUAL SPEED',
                'CAMINAR ZIGZAG', 'DE PIE BARRIENDO', 'DE PIE DOBLANDO TOALLAS',
@@ -201,14 +201,14 @@ def windowing(segmented_activity_data, window_size_samples):
 
 def balanced(data, labels):
     # compare the depth shape with balanced value    
-    if abs(data[0].shape[0] - _DEF_WINDOWS_BALANCED_MEAN) < _DEF_WINDOWS_BALANCED_THRESHOLD:
+    if data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN < 0:
         # remove data
         return None, None 
-    elif abs(data[0].shape[0]  - _DEF_WINDOWS_BALANCED_MEAN) > _DEF_WINDOWS_BALANCED_THRESHOLD:
+    elif abs(data.shape[0]  - _DEF_WINDOWS_BALANCED_MEAN) > _DEF_WINDOWS_BALANCED_THRESHOLD:
         # Balance data
-        random_indexes = [np.random.randint(0, data[0].shape[0]) for _ in range(_DEF_WINDOWS_BALANCED_MEAN)]
+        random_indexes = [np.random.randint(0, data.shape[0]) for _ in range(_DEF_WINDOWS_BALANCED_MEAN)]
 
-        data_balanced = data[0][random_indexes]
+        data_balanced = data[random_indexes]
         labels_balanced = [labels[index] for index in random_indexes]
 
         return data_balanced, labels_balanced
@@ -231,8 +231,11 @@ def stack(windowed_data, segment_body, export_folder_name):
     all_labels = []
     for activity, data in windowed_data.items():
         data_selected = data[:, 1:7, :]
+        sub_concatenated_data = data_selected
+        sub_all_labels = []
+        sub_all_labels.extend([activity] * data_selected.shape[0])
         
-        if activity != activity_previous or index == len(list(windowed_data.keys())) - 1:
+        if activity != activity_previous or index == len(list(windowed_data.keys())) or index == 0:
             # balanced data before stack
             sub_concatenated_balanced_data, sub_all_balanced_labels = balanced(sub_concatenated_data, sub_all_labels)
 
@@ -240,26 +243,18 @@ def stack(windowed_data, segment_body, export_folder_name):
             if sub_concatenated_balanced_data is not None:
                 concatenated_data.append(sub_concatenated_balanced_data)
                 all_labels.append(sub_all_balanced_labels)
-            
-            sub_concatenated_data = []
-            sub_concatenated_data.append(data_selected)
-            sub_all_labels = []
-            sub_all_labels.extend([activity] * data_selected.shape[0])
-        else:
-            # append all windows
-            sub_concatenated_data.append(data_selected)            
-            sub_all_labels.extend([activity] * data_selected.shape[0])
 
-        activity_previous = activity
         index = index + 1
+        activity_previous = activity
+        
 
     # Convertir la lista de arrays en un array final si no está vacío
     if concatenated_data:
-        concatenated_data = np.vstack(concatenated_data)
+        concatenated_data_stack = np.vstack(concatenated_data)
     else:
         concatenated_data = np.array([])  # Array vacío si no hay datos
         
-    return concatenated_data, all_labels
+    return concatenated_data_stack, all_labels
 
 def extract_features(data):
     # ***************
