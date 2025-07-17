@@ -25,7 +25,7 @@ _DEF_CALIBRATE_WITH_START_WALKING_USUAL_SPEED = 15778800
 _DEF_WINDOW_SIZE_SAMPLES = 250
 _DEF_IMAGES_FOLDER = 'Images_activities'
 _DEF_WINDOWS_BALANCED_MEAN = 12 # for all tasks (training + test)
-_DEF_WINDOWS_BALANCED_THRESHOLD = 50 # for all windows (training + test)
+_DEF_WINDOWS_BALANCED_THRESHOLD = 8  # for all windows (training + test)
 
 _ACTIVITIES = ['CAMINAR CON LA COMPRA', 'CAMINAR CON MÓVIL O LIBRO', 'CAMINAR USUAL SPEED',
                'CAMINAR ZIGZAG', 'DE PIE BARRIENDO', 'DE PIE DOBLANDO TOALLAS',
@@ -201,10 +201,11 @@ def windowing(segmented_activity_data, window_size_samples):
 
 def balanced(data, labels):
     # compare the depth shape with balanced value    
-    if data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN < 0:
+    #if data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN < 0:
+    if abs(data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) < (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
         # remove data
         return None, None 
-    elif abs(data.shape[0]  - _DEF_WINDOWS_BALANCED_MEAN) > _DEF_WINDOWS_BALANCED_THRESHOLD:
+    elif abs(data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) > (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
         # Balance data
         random_indexes = [np.random.randint(0, data.shape[0]) for _ in range(_DEF_WINDOWS_BALANCED_MEAN)]
 

@@ -174,6 +174,8 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
         any(sensor in f for sensor in ['_' + item for item in [sensor.name for sensor in sensors]])
     ]
 
+    participant_files = sorted(participant_files)
+
     participant_dataset = []
     participant_label_dataset = []
     
@@ -191,7 +193,7 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
             participant_label_dataset.append(participant_sensor_dataset[WINDOW_ALL_LABELS])
             
          # aggregate feature datasets: wrist and thing
-        if "features" in participant_file and feature_model_selected(models):
+        if "features" in participant_file and "mets" not in participant_file and feature_model_selected(models):
             participant_sensor_feature_file = os.path.join(participant_folder, participant_file)
             participant_sensor_feature_dataset = np.load(participant_sensor_feature_file)
             
@@ -289,6 +291,8 @@ def main(args):
     for line in args.participants_file:
         participants = participants + line.strip().split(',')
 
+    participants = sorted(participants)
+    
     # Participant datasets agregation
     if len(args.ml_sensors[0]) > 1:
         for participant in participants:
