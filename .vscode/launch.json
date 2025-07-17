@@ -14,12 +14,15 @@
                 //"--bin-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1003/PMP1003_W1_Acelerometría_Muñeca.BIN",
 
                 // STEP02: Windowed
-                "--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1051/PMP1051_W1_M.csv",
-                "--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1051/PMP1051_RegistroActividades.xlsx",
-                "--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1051/data_1051_tot_week_M.npz",                   
+                "--csv-matrix-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1020/PMP1020_W1_PI.csv",
+                "--activity-PMP", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1020/PMP1020_RegistroActividades.xlsx",
+                "--export-folder-name", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input/PMP1020/data_1020_tot_PI.npz",                   
                 "--make-feature-extractions",                
                 //"--include-not-estructure-data",
-                //"--has-timeoff", "False",
+                "--has-timeoff", "False",
+                "--calibrate-with-start-WALKING-USUAL-SPEED", "13261111",
+                "--start-time-WALKING-USUAL-SPEED", "10:05:10"
+
                 //"--calibrate-with-start-WALKING-USUAL-SPEED", "15519959",
 
                 // Trials with the start time readed from .csv file
