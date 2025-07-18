@@ -202,10 +202,10 @@ def windowing(segmented_activity_data, window_size_samples):
 def balanced(data, labels):
     # compare the depth shape with balanced value    
     #if data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN < 0:
-    if abs(data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) < (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
+    if (data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) < (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
         # remove data
         return None, None 
-    elif abs(data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) > (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
+    elif (data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) > (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
         # Balance data
         random_indexes = [np.random.randint(0, data.shape[0]) for _ in range(_DEF_WINDOWS_BALANCED_MEAN)]
 
@@ -252,10 +252,11 @@ def stack(windowed_data, segment_body, export_folder_name):
     # Convertir la lista de arrays en un array final si no está vacío
     if concatenated_data:
         concatenated_data_stack = np.vstack(concatenated_data)
+        all_labels_stack = [s for sublista in all_labels for s in sublista]
     else:
         concatenated_data = np.array([])  # Array vacío si no hay datos
         
-    return concatenated_data_stack, all_labels
+    return concatenated_data_stack, all_labels_stack
 
 def extract_features(data):
     # ***************
