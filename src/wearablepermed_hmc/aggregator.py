@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 
 WINDOW_CONCATENATED_DATA = "arr_0"
 WINDOW_ALL_LABELS = "arr_1"
+WINDOW_ALL_METADATA = "arr_2"
 
 class ML_Model(Enum):
     ESANN = 'ESANN'
@@ -178,9 +179,11 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
 
     participant_dataset = []
     participant_label_dataset = []
-    
+    participant_metadata_dataset = []
+
     participant_feature_dataset = []
     participant_feature_label_dataset = []
+    participant_feature_metadata_dataset = []
     
     # aggregate datasets
     for participant_file in participant_files:
@@ -191,6 +194,7 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
             
             participant_dataset.append(participant_sensor_dataset[WINDOW_CONCATENATED_DATA])
             participant_label_dataset.append(participant_sensor_dataset[WINDOW_ALL_LABELS])
+            participant_metadata_dataset.append(participant_sensor_dataset[WINDOW_ALL_METADATA])
             
          # aggregate feature datasets: wrist and thing
         if "features" in participant_file and "mets" not in participant_file and feature_model_selected(models):
@@ -199,26 +203,32 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
             
             participant_feature_dataset.append(participant_sensor_feature_dataset[WINDOW_CONCATENATED_DATA])
             participant_feature_label_dataset.append(participant_sensor_feature_dataset[WINDOW_ALL_LABELS])
+            participant_feature_metadata_dataset.append(participant_sensor_feature_dataset[WINDOW_ALL_METADATA])
 
     if len(participant_dataset) > 0:
         participant_dataset = np.concatenate(participant_dataset, axis=0)
         participant_label_dataset = np.concatenate(participant_label_dataset, axis=0)
-    
+        participant_metadata_dataset = np.concatenate(participant_metadata_dataset, axis=0)
+
         participant_sensor_all_file = os.path.join(participant_folder, 'data_' + participant + "_all.npz")
-        np.savez(participant_sensor_all_file, participant_dataset, participant_label_dataset)
+        np.savez(participant_sensor_all_file, participant_dataset, participant_label_dataset, participant_metadata_dataset)
     
     if len(participant_feature_dataset) > 0:
+        print(participant)
         participant_feature_dataset = np.concatenate(participant_feature_dataset, axis=0)
         participant_feature_label_dataset = np.concatenate(participant_feature_label_dataset, axis=0)
+        participant_feature_metadata_dataset = np.concatenate(participant_feature_metadata_dataset, axis=0)
                 
         participant_sensor_feature_all_file = os.path.join(participant_folder, 'data_' + participant + "_features_all.npz")
-        np.savez(participant_sensor_feature_all_file, participant_feature_dataset, participant_feature_label_dataset) 
+        np.savez(participant_sensor_feature_all_file, participant_feature_dataset, participant_feature_label_dataset, participant_feature_metadata_dataset) 
                 
 def combine_datasets(case_id_folder, dataset_folder, participants, sensors):
     dataset = []
     dataset_label = []
+    dataset_metadata = []
     dataset_feature = []
     dataset_feature_label = []
+    dataset_feature_metadata = []
 
     for participant in participants:
         participant_folder = os.path.join(dataset_folder, participant)
@@ -245,6 +255,7 @@ def combine_datasets(case_id_folder, dataset_folder, participants, sensors):
                 
                 dataset.append(participant_sensor_dataset[WINDOW_CONCATENATED_DATA])
                 dataset_label.append(participant_sensor_dataset[WINDOW_ALL_LABELS])
+                dataset_metadata.append(participant_sensor_dataset[WINDOW_ALL_METADATA])
                 
             # aggregate feature datasets: wrist and thing
             if "features" in participant_file:
@@ -253,20 +264,23 @@ def combine_datasets(case_id_folder, dataset_folder, participants, sensors):
                 
                 dataset_feature.append(participant_sensor_feature_dataset[WINDOW_CONCATENATED_DATA])
                 dataset_feature_label.append(participant_sensor_feature_dataset[WINDOW_ALL_LABELS])
+                dataset_feature_metadata.append(participant_sensor_feature_dataset[WINDOW_ALL_METADATA])
 
     if len(dataset) > 0:
         dataset = np.concatenate(dataset, axis=0)
         dataset_label = np.concatenate(dataset_label, axis=0)
+        dataset_metadata = np.concatenate(dataset_metadata, axis=0)
     
         dataset_all_file = os.path.join(case_id_folder, "data_all.npz")
-        np.savez(dataset_all_file, dataset, dataset_label)
+        np.savez(dataset_all_file, dataset, dataset_label, dataset_metadata)
     
     if len(dataset_feature) > 0:
         dataset_feature = np.concatenate(dataset_feature, axis=0)
         dataset_feature_label = np.concatenate(dataset_feature_label, axis=0)
+        dataset_feature_metadata = np.concatenate(dataset_feature_metadata, axis=0)
                 
         dataset_feature_all_file = os.path.join(case_id_folder, "data_feature_all.npz")
-        np.savez(dataset_feature_all_file, dataset_feature, dataset_feature_label)                              
+        np.savez(dataset_feature_all_file, dataset_feature, dataset_feature_label, dataset_feature_metadata)                              
 
 def main(args):
     """Wrapper allowing :func:`fib` to be called with string arguments in a CLI fashion

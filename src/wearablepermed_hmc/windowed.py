@@ -199,24 +199,24 @@ def windowing(segmented_activity_data, window_size_samples):
     
     return windowed_data, labels_thigh
 
-def balanced(data, labels):
+def balanced(data, labels, metadata):
     # compare the depth shape with balanced value    
-    #if data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN < 0:
     if (data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) < (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
         # remove data
-        return None, None 
+        return None, None, None
     elif (data.shape[0] - _DEF_WINDOWS_BALANCED_MEAN) > (_DEF_WINDOWS_BALANCED_THRESHOLD - _DEF_WINDOWS_BALANCED_MEAN):
         # Balance data
         random_indexes = [np.random.randint(0, data.shape[0]) for _ in range(_DEF_WINDOWS_BALANCED_MEAN)]
 
         data_balanced = data[random_indexes]
         labels_balanced = [labels[index] for index in random_indexes]
+        metadata_balanced = [metadata[index] for index in random_indexes]
 
-        return data_balanced, labels_balanced
+        return data_balanced, labels_balanced,metadata_balanced
     else:
-        return data, labels
+        return data, labels, metadata
         
-def stack(windowed_data, segment_body, export_folder_name):
+def stack(windowed_data, segment_body, participant_id, export_folder_name):
     if not os.path.isfile(export_folder_name):
         # Create the file
         with open(export_folder_name, "w") as file:
@@ -230,20 +230,24 @@ def stack(windowed_data, segment_body, export_folder_name):
 
     concatenated_data = []
     all_labels = []
+    all_metadata = []
     for activity, data in windowed_data.items():
         data_selected = data[:, 1:7, :]
         sub_concatenated_data = data_selected
         sub_all_labels = []
         sub_all_labels.extend([activity] * data_selected.shape[0])
-        
+        sub_all_metadata = []
+        sub_all_metadata.extend([participant_id] * data_selected.shape[0])
+
         if activity != activity_previous or index == len(list(windowed_data.keys())) or index == 0:
             # balanced data before stack
-            sub_concatenated_balanced_data, sub_all_balanced_labels = balanced(sub_concatenated_data, sub_all_labels)
+            sub_concatenated_balanced_data, sub_all_balanced_labels, sub_all_balanced_metadata = balanced(sub_concatenated_data, sub_all_labels, sub_all_metadata)
 
             # append sub labels windows
             if sub_concatenated_balanced_data is not None:
                 concatenated_data.append(sub_concatenated_balanced_data)
                 all_labels.append(sub_all_balanced_labels)
+                all_metadata.append(sub_all_balanced_metadata)
 
         index = index + 1
         activity_previous = activity
@@ -253,10 +257,11 @@ def stack(windowed_data, segment_body, export_folder_name):
     if concatenated_data:
         concatenated_data_stack = np.vstack(concatenated_data)
         all_labels_stack = [s for sublista in all_labels for s in sublista]
+        all_metadata_stack = [s for sublista in all_metadata for s in sublista]
     else:
         concatenated_data = np.array([])  # Array vacío si no hay datos
         
-    return concatenated_data_stack, all_labels_stack
+    return concatenated_data_stack, all_labels_stack, all_metadata_stack
 
 def extract_features(data):
     # ***************
@@ -425,8 +430,8 @@ def extract_features(data):
 
     return X_train
 
-def export_data(concatenated_data, all_labels, export_folder_name):
-    np.savez(export_folder_name, concatenated_data, all_labels)
+def export_data(concatenated_data, all_labels, all_metadata, export_folder_name):
+    np.savez(export_folder_name, concatenated_data, all_labels, all_metadata)
 
 def main(args):
     args = parse_args(args)
@@ -471,9 +476,9 @@ def main(args):
     windowed_data, labels = windowing(segmented_activity_data_autocalibrated, args.window_size_samples)
     
     _logger.debug("Step 06: Starting Stacking Data ...")
-    concatenated_data, all_labels = stack(windowed_data, segment_body, args.export_folder_name)
+    concatenated_data, all_labels, all_metadata = stack(windowed_data, segment_body, participant_id, args.export_folder_name)
 
-    export_data(concatenated_data, all_labels, args.export_folder_name) 
+    export_data(concatenated_data, all_labels, all_metadata, args.export_folder_name) 
 
     if args.make_feature_extractions == True:
         _logger.debug("Step 07: Starting the calculus of features vectors ...")
@@ -485,7 +490,7 @@ def main(args):
         
         file_feature_extractions_name = os.path.join(folder.parent, file_name + "_features" + ".npz")
         
-        export_data(extract_features_data, all_labels, file_feature_extractions_name)
+        export_data(extract_features_data, all_labels, all_metadata, file_feature_extractions_name)
     
     _logger.info("Aggregator ends here")
 
