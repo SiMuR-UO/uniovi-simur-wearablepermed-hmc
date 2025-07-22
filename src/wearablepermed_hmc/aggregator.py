@@ -136,9 +136,7 @@ def parse_args(args):
         action="store_const",
         const=logging.INFO,
     )
-    parser.add_argument(
-        "-vv",
-    )    
+  
     return parser.parse_args(args)
 
 def setup_logging(loglevel):
@@ -214,7 +212,8 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
         np.savez(participant_sensor_all_file, participant_dataset, participant_label_dataset, participant_metadata_dataset)
     
     if len(participant_feature_dataset) > 0:
-        print(participant)
+        _logger.info(participant)
+
         participant_feature_dataset = np.concatenate(participant_feature_dataset, axis=0)
         participant_feature_label_dataset = np.concatenate(participant_feature_label_dataset, axis=0)
         participant_feature_metadata_dataset = np.concatenate(participant_feature_metadata_dataset, axis=0)

@@ -24,6 +24,7 @@
                 // "--start-time-WALKING-USUAL-SPEED", "10:34:25"
 
                 // STEP03: Aggregator
+                "--verbose",
                 "--case-id", "case_07",
                 "--dataset-folder", "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input",                
                 "--ml-models","ESANN,RandomForest",
