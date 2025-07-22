@@ -188,7 +188,7 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
     # aggregate datasets
     for participant_file in participant_files:
         # aggregate not feature datasets: wrist and thing 
-        if "features" not in participant_file and convolution_model_selected(models):
+        if "features" not in participant_file and convolution_model_selected(models) and "tot" in participant_file:
             participant_sensor_file = os.path.join(participant_folder, participant_file)
             participant_sensor_dataset = np.load(participant_sensor_file)
             
@@ -197,7 +197,7 @@ def combine_participant_dataset(dataset_folder, participant, models, sensors):
             participant_metadata_dataset.append(participant_sensor_dataset[WINDOW_ALL_METADATA])
             
          # aggregate feature datasets: wrist and thing
-        if "features" in participant_file and "mets" not in participant_file and feature_model_selected(models):
+        if "features" in participant_file and "mets" not in participant_file and feature_model_selected(models) and "tot" in participant_file:
             participant_sensor_feature_file = os.path.join(participant_folder, participant_file)
             participant_sensor_feature_dataset = np.load(participant_sensor_feature_file)
             
