@@ -9,7 +9,7 @@ import os
 base_path = "/mnt/nvme1n2/git/uniovi-simur-wearablepermed-data/input"
 
 # === Read participant names from file ===
-with open('/home/simur/git/uniovi-simur-wearablepermed-hmc/src/wearablepermed_hmc/French Mission/participants.txt', 'r') as f:
+with open('/home/simur/git/uniovi-simur-wearablepermed-hmc/src/wearablepermed_hmc/french_mission/participants.txt', 'r') as f:
     names = [name.strip() for name in f.read().split(',') if name.strip()]
 
 summary_data = []  # Will collect processed results for all participants
@@ -197,5 +197,5 @@ for name in names:
 
 # === Export all data to Excel ===
 df_summary = pd.DataFrame(summary_data)
-df_summary.to_excel("/home/simur/git/uniovi-simur-wearablepermed-hmc/src/wearablepermed_hmc/French Mission/summary_participants_mean_min_max.xlsx", index=False)
+df_summary.to_excel("/home/simur/git/uniovi-simur-wearablepermed-hmc/src/wearablepermed_hmc/french_mission/summary_participants_mean_min_max.xlsx", index=False)
 print("✅ Summary saved to summary_participants_mean_min_max.xlsx")

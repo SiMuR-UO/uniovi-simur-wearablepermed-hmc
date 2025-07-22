@@ -47,7 +47,7 @@ def weight_to_group(weight):
         return '80+'
 
 # Load the summary Excel file with participant data and computed statistics
-summary_file = '/home/simur/git/uniovi-simur-wearablepermed-hmc/src/wearablepermed_hmc/French Mission/summary_participants_mean_min_max.xlsx'
+summary_file = '/home/simur/git/uniovi-simur-wearablepermed-hmc/src/wearablepermed_hmc/french_mission/summary_participants_mean_min_max.xlsx'
 df = pd.read_excel(summary_file)
 
 # Add categorical grouping columns for Age, Height, and Weight
